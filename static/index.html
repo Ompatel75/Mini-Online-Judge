@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Online Judge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css?v=6">
+</head>
+<body>
+    <div id="bg-blob1" class="blob"></div>
+    <div id="bg-blob2" class="blob"></div>
+
+    <nav class="glass-nav">
+        <div class="logo">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <defs>
+                    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6366f1" />
+                        <stop offset="100%" stop-color="#8b5cf6" />
+                    </linearGradient>
+                </defs>
+                <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+            </svg>
+            MOJ<span style="color: var(--primary);">.</span>
+        </div>
+        <div class="nav-links" id="nav-links">
+            <!-- Will be populated by JS -->
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Auth Section / Landing Page -->
+        <section id="auth-section" class="active-section" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 70vh;">
+            <div class="hero-text" style="padding-right: 2rem;">
+                <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Master Algorithms with MOJ.</h1>
+                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 2rem;">A beautifully designed, blazingly fast online judge platform. Start solving problems, run code in real-time, and climb the leaderboard.</p>
+                <div style="display: flex; gap: 1rem; align-items: center;">
+                    <span class="admin-badge" style="background: rgba(99, 102, 241, 0.1); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.2);">C++ GCC 11 Supported</span>
+                    <span class="admin-badge" style="background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16,185,129,0.2);">Sub-millisecond Judging</span>
+                </div>
+            </div>
+
+            <div class="glass-card" style="padding: 2.5rem;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Welcome Back</h2>
+                <p style="font-size: 0.95rem;">Sign in or create an account to start coding.</p>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="switchAuthTab('login')">Login</button>
+                    <button class="tab-btn" onclick="switchAuthTab('register')">Register</button>
+                </div>
+
+                <form id="auth-form" onsubmit="handleAuth(event)">
+                    <div id="register-fields" style="display: none;">
+                        <label>Email</label>
+                        <input type="email" id="auth-email" placeholder="coder@example.com">
+                    </div>
+                    <label>Username</label>
+                    <input type="text" id="auth-username" required placeholder="username">
+                    <label>Password</label>
+                    <input type="password" id="auth-password" required placeholder="••••••••">
+                    <button type="submit" class="primary-btn" id="auth-submit-btn">Login</button>
+                    <p id="auth-error" class="error-msg"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="glass-card hidden">
+            <div class="dashboard-header">
+                <h2 id="welcome-msg">Dashboard</h2>
+                <div class="admin-badge" id="admin-badge" style="display: none;">ADMIN</div>
+            </div>
+
+            <!-- Admin: Add Problem -->
+            <div id="admin-panel" style="display: none;" class="panel">
+                <h3>Add New Problem</h3>
+                <form id="add-problem-form" onsubmit="handleAddProblem(event)">
+                    <input type="text" id="prob-title" required placeholder="Problem Title (e.g. Two Sum)">
+                    <textarea id="prob-desc" required placeholder="Problem Description..."></textarea>
+                    <div class="row">
+                        <input type="number" id="prob-time" step="0.1" value="1.0" required placeholder="Time Limit (s)">
+                        <input type="number" id="prob-mem" value="256" required placeholder="Memory Limit (MB)">
+                    </div>
+                    <input type="text" id="prob-tags" placeholder="Tags (comma separated, e.g. dp,math)">
+                    
+                    <h4>Initial Test Case</h4>
+                    <textarea id="prob-input" required placeholder="Input Data"></textarea>
+                    <textarea id="prob-expected" required placeholder="Expected Output"></textarea>
+                    
+                    <button type="submit" class="primary-btn">Create Problem</button>
+                    <p id="admin-msg" class="success-msg"></p>
+                </form>
+            </div>
+
+            <!-- User: Problems List -->
+            <div class="panel problems-list">
+                <h3>Available Problems</h3>
+                <div id="problems-container">
+                    <!-- Problems loaded via JS -->
+                </div>
+            </div>
+            
+            <!-- Submit Code Modal/Section -->
+            <div id="submit-panel" class="hidden" style="margin-bottom: 2rem;">
+                <button class="text-btn" onclick="hideSubmitPanel()" style="margin-bottom: 1.5rem;">← Back to Problems</button>
+                
+                <div class="split-layout">
+                    <!-- Left Side: Problem Statement -->
+                    <div class="panel split-left" style="height: 100%; display: flex; flex-direction: column;">
+                        <h3 id="submit-prob-title" style="font-size: 1.6rem; color: #fff; margin-bottom: 1rem;">Submit Solution</h3>
+                        <div id="submit-prob-desc" class="prob-desc" style="flex: 1; overflow-y: auto;"></div>
+                    </div>
+                    
+                    <!-- Right Side: Code Editor -->
+                    <div class="panel split-right" style="height: 100%; display: flex; flex-direction: column;">
+                        <form id="submit-code-form" onsubmit="handleSubmitCode(event)" style="display: flex; flex-direction: column; flex: 1;">
+                            <label style="display: flex; justify-content: space-between;">
+                                C++ Code
+                                <span style="font-size: 0.8rem; color: var(--primary);">C++</span>
+                            </label>
+                            <textarea id="code-editor" class="code-editor" required style="flex: 1; min-height: 400px;" spellcheck="false">#include <iostream>
+using namespace std;
+
+int main() {
+    // Write your C++ solution here...
+    
+    return 0;
+}</textarea>
+                            <button type="submit" class="primary-btn" id="submit-btn" style="margin-top: 1rem;">Submit Code</button>
+                        </form>
+                        
+                        <div id="verdict-display" class="hidden">
+                            <h4>Verdict: <span id="verdict-status">WAITING</span></h4>
+                            <p id="verdict-time"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script src="/static/script.js?v=6"></script>
+</body>
+</html>
