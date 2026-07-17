@@ -109,13 +109,11 @@ def judge_submission(submission_id: int, db: Session):
             return
 
 
-    # Create a temporary directory to store the code and IO files
     with tempfile.TemporaryDirectory() as temp_dir:
         code_path = os.path.join(temp_dir, "solution.cpp")
         with open(code_path, "w") as f:
             f.write(submission.code)
-        
-        # Compile the code
+
         compile_cmd = "g++ -O2 solution.cpp -o solution"
         try:
             client.containers.run(

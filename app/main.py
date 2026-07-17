@@ -32,4 +32,4 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 def read_root():
     if os.path.exists("static/index.html"):
         return FileResponse("static/index.html")
-    return {"message": "Welcome to Mini Online Judge API"}
+    return {"message": "Welcome to Judgely API"}

@@ -33,7 +33,6 @@ def submit_code(
     db.commit()
     db.refresh(submission)
     
-   
     background_tasks.add_task(judge_submission, submission.id, db)
     
     return submission

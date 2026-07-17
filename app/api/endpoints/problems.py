@@ -59,7 +59,6 @@ def delete_problem(
     if not problem:
         raise HTTPException(status_code=404, detail="Problem not found")
         
-    # Manually delete child records first to avoid Postgres FK NotNull violations
     db.query(TestCase).filter(TestCase.problem_id == problem_id).delete()
     from app.db.models import Submission
     db.query(Submission).filter(Submission.problem_id == problem_id).delete()

@@ -22,8 +22,9 @@ def register_user(user_in: UserCreate, db: Session = Depends(get_db)) -> Any:
         username=user_in.username,
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
-        is_admin=False # Default to false, can be set manually via DB later for initial admin
+        is_admin=False 
     )
+    
     db.add(user)
     db.commit()
     db.refresh(user)

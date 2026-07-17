@@ -5,7 +5,6 @@ let authMode = 'login'; // login or register
 let selectedProblemId = null;
 let pollInterval = null;
 
-// --- UI Navigation ---
 function switchAuthTab(mode) {
     authMode = mode;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -43,7 +42,6 @@ function logout() {
     document.getElementById('nav-links').innerHTML = '';
 }
 
-// --- API Calls ---
 
 async function handleAuth(e) {
     e.preventDefault();
@@ -61,7 +59,7 @@ async function handleAuth(e) {
                 body: JSON.stringify({ username, email, password })
             });
             if (!res.ok) throw new Error((await res.json()).detail || "Registration failed");
-            // Auto login after register
+
             await loginRequest(username, password);
         } else {
             await loginRequest(username, password);
@@ -223,9 +221,8 @@ async function deleteProblem(id) {
     } catch (err) {
         alert(err.message);
     }
-}
+}   
 
-// Add tab support to editor
 document.addEventListener('DOMContentLoaded', () => {
     const editor = document.getElementById('code-editor');
     if (editor) {

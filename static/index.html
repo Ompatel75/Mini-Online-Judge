@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Online Judge</title>
+    <title>Judgely</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css?v=6">
 </head>
@@ -16,13 +16,13 @@
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                 <defs>
                     <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stop-color="#6366f1" />
-                        <stop offset="100%" stop-color="#8b5cf6" />
+                        <stop offset="0%" stop-color="#06b6d4" />
+                        <stop offset="100%" stop-color="#10b981" />
                     </linearGradient>
                 </defs>
                 <path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
             </svg>
-            MOJ<span style="color: var(--primary);">.</span>
+            Judgely<span style="color: var(--primary);">.</span>
         </div>
         <div class="nav-links" id="nav-links">
             <!-- Will be populated by JS -->
@@ -33,10 +33,10 @@
         <!-- Auth Section / Landing Page -->
         <section id="auth-section" class="active-section" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 70vh;">
             <div class="hero-text" style="padding-right: 2rem;">
-                <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Master Algorithms with MOJ.</h1>
-                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 2rem;">A beautifully designed, blazingly fast online judge platform. Start solving problems, run code in real-time, and climb the leaderboard.</p>
+                <h1 style="font-size: 3.5rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; background: linear-gradient(135deg, #fff 0%, #a5f3fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Master Algorithms with Judgely.</h1>
+                <p style="font-size: 1.15rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 2rem;">A beautifully designed, blazingly fast online judge platform. Start solving problems and run code in real-time.</p>
                 <div style="display: flex; gap: 1rem; align-items: center;">
-                    <span class="admin-badge" style="background: rgba(99, 102, 241, 0.1); color: #a5b4fc; border: 1px solid rgba(99,102,241,0.2);">C++ GCC 11 Supported</span>
+                    <span class="admin-badge" style="background: rgba(6, 182, 212, 0.1); color: #a5f3fc; border: 1px solid rgba(6, 182, 212, 0.2);">C++ GCC 11 Supported</span>
                     <span class="admin-badge" style="background: rgba(16, 185, 129, 0.1); color: #34d399; border: 1px solid rgba(16,185,129,0.2);">Sub-millisecond Judging</span>
                 </div>
             </div>
@@ -107,19 +107,19 @@
                 
                 <div class="split-layout">
                     <!-- Left Side: Problem Statement -->
-                    <div class="panel split-left" style="height: 100%; display: flex; flex-direction: column;">
-                        <h3 id="submit-prob-title" style="font-size: 1.6rem; color: #fff; margin-bottom: 1rem;">Submit Solution</h3>
-                        <div id="submit-prob-desc" class="prob-desc" style="flex: 1; overflow-y: auto;"></div>
+                    <div class="panel split-left">
+                        <h3 id="submit-prob-title" style="font-size: 1.6rem; color: #fff; margin-bottom: 1.0rem;">Submit Solution</h3>
+                        <div id="submit-prob-desc" class="prob-desc" style="line-height: 1.8; margin-bottom: 0.5rem;"></div>
                     </div>
                     
                     <!-- Right Side: Code Editor -->
-                    <div class="panel split-right" style="height: 100%; display: flex; flex-direction: column;">
-                        <form id="submit-code-form" onsubmit="handleSubmitCode(event)" style="display: flex; flex-direction: column; flex: 1;">
-                            <label style="display: flex; justify-content: space-between;">
+                    <div class="panel split-right">
+                        <form id="submit-code-form" onsubmit="handleSubmitCode(event)">
+                            <label style="display: flex; justify-content: space-between; margin-bottom: 0.8rem;">
                                 C++ Code
                                 <span style="font-size: 0.8rem; color: var(--primary);">C++</span>
                             </label>
-                            <textarea id="code-editor" class="code-editor" required style="flex: 1; min-height: 400px;" spellcheck="false">#include <iostream>
+                            <textarea id="code-editor" class="code-editor" required style="width: 100%; min-height: 400px; padding: 1.2rem; border-radius: 12px; font-size: 1rem;" spellcheck="false">#include <iostream>
 using namespace std;
 
 int main() {
@@ -127,7 +127,7 @@ int main() {
     
     return 0;
 }</textarea>
-                            <button type="submit" class="primary-btn" id="submit-btn" style="margin-top: 1rem;">Submit Code</button>
+                            <button type="submit" class="primary-btn" id="submit-btn" style="margin-top: 1.2rem;">Submit Code</button>
                         </form>
                         
                         <div id="verdict-display" class="hidden">
