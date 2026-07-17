@@ -18,11 +18,14 @@ def register_user(user_in: UserCreate, db: Session = Depends(get_db)) -> Any:
     if user:
         raise HTTPException(status_code=400, detail="Email already registered")
     
+    # First user registered in the system becomes Admin automatically
+    is_first_user = db.query(User).count() == 0
+    
     user = User(
         username=user_in.username,
         email=user_in.email,
         hashed_password=get_password_hash(user_in.password),
-        is_admin=False 
+        is_admin=is_first_user
     )
     
     db.add(user)
