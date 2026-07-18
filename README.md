@@ -69,7 +69,7 @@ moj-backend/
 ## 🔗 Live Demo
 
 You can view the live deployed application here:
-👉 **[Mini Online Judge Live App](https://mini-online-judge-e6c0.onrender.com/)**
+👉 **[Mini Online Judge Live App](https://judgely.onrender.com)**
 
 ---
 
